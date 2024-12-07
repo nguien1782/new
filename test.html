@@ -116,12 +116,20 @@
                 if (energyChart) {
                     const energyPoint = energyChart.series[0].points[0];
                     energyPoint.update(energyValue);
+                    // Cập nhật giá trị max nếu cần
+                    if (energyValue > energyChart.yAxis[0].max) {
+                        energyChart.yAxis[0].update({ max: Math.ceil(energyValue + 50) }); // Tăng max thêm 50 đơn vị
+                    }
                     dataBuffer.push([Date.now(), energyValue, waterValue]);
                 }
 
                 if (waterChart) {
                     const waterPoint = waterChart.series[0].points[0];
                     waterPoint.update(waterValue);
+                    // Cập nhật giá trị max nếu cần
+                    if (waterValue > waterChart.yAxis[0].max) {
+                        waterChart.yAxis[0].update({ max: Math.ceil(waterValue + 100) }); // Tăng max thêm 100 đơn vị
+                    }
                 }
             }
         });
@@ -193,7 +201,7 @@
             'container-energy', Highcharts.merge(gaugeOptions, {
                 yAxis: {
                     min: 0,
-                    max: 500, // Cập nhật giá trị max
+                    max: 100, // Cập nhật giá trị max
                     title: {
                         text: 'Điện năng'
                     }
@@ -221,7 +229,7 @@
             'container-water', Highcharts.merge(gaugeOptions, {
                 yAxis: {
                     min: 0,
-                    max: 3000, // Cập nhật giá trị max
+                    max: 100, // Cập nhật giá trị max
                     title: {
                         text: 'Nước'
                     }
